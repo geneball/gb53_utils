@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<Title>GB53.net gb53_utils</Title>
+	<link rel="icon" href="gb53.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="gb53.css">
+	<script src="../bundles/gb53_utils.js"></script>
+</head>
+<body>
+<div id='gb53_status'>
+	<div> <span id='gb53_msg'>msg</span></div>
+</div>
+
+<h1> <span id='gb53_module_name'></span> gb53_utils </h1>
+<div id='gb53_vals'> </div>
+
+<div id='gb53_edit'>
+	browserify gb53_utils.js -o ../bundles/gb53_utils.js -dv <br> 
+	jsdoc gb53_utils.js -d ../jsdocs <br> 
+	qunit -c gb53_utils.js -t tests.js <br> 
+	
+<button> example btn </button>
+</div>
+<hr>
+
+</body>
+</html>
