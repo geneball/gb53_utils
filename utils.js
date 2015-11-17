@@ -11,7 +11,7 @@ var sprintf = require('sprintf');
 var expect = require('expect');		// for verify()
 
 //var Utils = require('./utils'), PI = Utils.PI, DEG = Utils.DEG, asBool = Utils.asBool, asNum = Utils.asNum, asInt = Utils.asInt, selBool = Utils.selBool, selNum = Utils.selNum, selInt = Utils.selInt, angleWrap = Utils.angleWrap, clamp = Utils.clamp, pctClamp = Utils.pctClamp;
-var Log 	= require('gs53_log'); // Log. e() w() d() i() v() V() W() WF() C() show()
+var Log 	= require('gb53_log'); // Log. e() w() d() i() v() V() W() WF() C() show()
 
 var Version = 'gb53_utils.js 15-Nov-15';
 

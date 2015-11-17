@@ -1,9 +1,9 @@
 "use strict";
 
-var Log 	= require('../bkts/js/log');
-var Utils = require('gb53_utils'), PI = Utils.PI, DEG = Utils.DEG, asBool = Utils.asBool, asNum = Utils.asNum, 
-	asInt = Utils.asInt, selBool = Utils.selBool, selNum = Utils.selNum, selInt = Utils.selInt, angleWrap = Utils.angleWrap, 
-	clamp = Utils.clamp, pctClamp = Utils.pctClamp, qindexOf = Utils.qindexOf, extract = Utils.extract, asLiteral = Utils.asLiteral, verify = Utils.verify;
+var Log 	= require('gb53_log');
+var Utils	= require('gb53_utils'), PI = Utils.PI, DEG = Utils.DEG, asBool = Utils.asBool, asNum = Utils.asNum, 
+	asInt	= Utils.asInt, selBool = Utils.selBool, selNum = Utils.selNum, selInt = Utils.selInt, angleWrap = Utils.angleWrap, 
+	clamp	= Utils.clamp, pctClamp = Utils.pctClamp, qindexOf = Utils.qindexOf, extract = Utils.extract, asLiteral = Utils.asLiteral, verify = Utils.verify;
 
 var expect = require('expect');
 
