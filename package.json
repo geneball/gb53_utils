@@ -12,6 +12,11 @@
     "type": "git",
     "url": "http://bitbucket.org/geneball/gb53_utils"
   },
-  "author": "Gene Ball",
-  "license": "ISC"
+  "require": [ "gb53_log", "jquery-browserify", "moment", "sprintf", "expect" ],
+  "require-dev": [ "qunit-bdd" ],
+  "author": {
+	  "name": "Gene Ball",
+	  "email": "geneball@gmail.com"
+  },
+  "license": "MIT"
 }

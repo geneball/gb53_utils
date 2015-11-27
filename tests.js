@@ -1,3 +1,7 @@
+/**
+ * gb53.net utils test module - 
+ * @module gb53_utils_test
+ */
 "use strict";
 
 var Log 	= require('gb53_log');
@@ -5,7 +9,8 @@ var Utils	= require('gb53_utils'), PI = Utils.PI, DEG = Utils.DEG, asBool = Util
 	asInt	= Utils.asInt, selBool = Utils.selBool, selNum = Utils.selNum, selInt = Utils.selInt, angleWrap = Utils.angleWrap, 
 	clamp	= Utils.clamp, pctClamp = Utils.pctClamp, qindexOf = Utils.qindexOf, extract = Utils.extract, asLiteral = Utils.asLiteral, verify = Utils.verify;
 
-var expect = require('expect');
+global.QUnit = require('qunit');
+var bdd = require('qunit-bdd'), describe = bdd.describe, it = bdd.it, expect = bdd.expect;
 
 describe("gb53_utils",  function() {    
 	Utils.init();
