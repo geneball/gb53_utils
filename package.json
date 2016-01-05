@@ -2,7 +2,7 @@
   "name": "gb53_utils",
   "version": "0.5.1",
   "description": "gb53.net utilities",
-  "main": "gb53_utils.js",
+  "main": "utils.js",
   "scripts": {
 	"brfy": "browserify utils.js -o ../bundles/gb53_utils.js -dv",
 	"jsdoc": "jsdoc utils.js -d ../jsdocs", 
