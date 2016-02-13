@@ -2,21 +2,43 @@
   "name": "gb53_utils",
   "version": "0.5.1",
   "description": "gb53.net utilities",
-  "main": "utils.js",
+  "main": "index.html",
   "scripts": {
-	"brfy": "browserify utils.js -o ../bundles/gb53_utils.js -dv",
-	"jsdoc": "jsdoc utils.js -d ../jsdocs", 
+    "jsdoc": "jsdoc utils.js -d ../jsdocs",
     "test": "qunit -c utils.js -t tests.js"
+  },
+  "jspm": {
+    "dependencies": {
+      "expect": "npm:expect@^1.14.0",
+      "jquery": "npm:jquery@^2.2.0",
+      "moment": "npm:moment@^2.11.2",
+      "qunit": "github:jquery/qunit@^1.21.0",
+      "qunit-bdd": "npm:qunit-bdd@^0.6.1",
+      "sprintf": "npm:sprintf@^0.1.5"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
   },
   "repository": {
     "type": "git",
     "url": "http://bitbucket.org/geneball/gb53_utils"
   },
-  "require": [ "gb53_log", "jquery-browserify", "moment", "sprintf", "expect" ],
-  "require-dev": [ "qunit-bdd" ],
+  "require": [
+    "gb53_log",
+    "jquery-browserify",
+    "moment",
+    "sprintf",
+    "expect"
+  ],
+  "require-dev": [
+    "qunit-bdd"
+  ],
   "author": {
-	  "name": "Gene Ball",
-	  "email": "geneball@gmail.com"
+    "name": "Gene Ball",
+    "email": "geneball@gmail.com"
   },
   "license": "MIT"
 }
