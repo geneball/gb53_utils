@@ -5,7 +5,6 @@
 import * as Log from '../log/log';
 import {PI,DEG,asBool,asNum,asInt,selBool,selNum,selInt,angleWrap,clamp,pctClamp,qindexOf,extract,asLiteral,verify} from '../utils/utils';
 import * as QUnit from 'qunit';
-import {expect} from 'expect';
 import * as Utils from '../utils/utils';
 
 QUnit.module("gb53_utils");
