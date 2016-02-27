@@ -4,9 +4,8 @@
  */
 'use strict';
 import $ from 'jquery';
-import moment from 'moment';
 import sprintf from 'sprintf';
-import * as Log from '../log/log';
+import * as Log from '../log/gb53_log';
 	
 var sVersion = 'gb53_utils.js 11-Feb-16';
 
@@ -25,15 +24,18 @@ export function init() {
 	}
     
 /**
- * shorthand for Math.PI
+ * shorthand for Math.PI * factor
+ * @param {var} [ factor ] - value to be multiplied, defaults to 1
+ *   e.g. PI(2) = 2 * Math.PI
  */
-//export PI =	Math.PI;
+export function PI(x){ return (x? x:1)*Math.PI; }
 
 /**
  * conversion factor for angles in degrees - multiply to convert to radians
- *   e.g.  180*DEG  =  PI radians
+ * @param {var} [ factor ] - value to be converted, defaults to 1
+ *   e.g.  DEG(180)  =  PI radians
  */
-//export DEG = 	Math.PI/180.0;
+export function DEG(x){ return	(x? x:1)*Math.PI/180.0 };
 
 /** 
  * return numeric value from string or value
@@ -200,151 +202,6 @@ export function showCam(cam){
     		cam.position.x, cam.position.y, cam.position.z, 
     		cam.target.x, cam.target.y, cam.target.z); 
 }
-
-/**
- * extracts specified substring
- * extract( 'abc( def ) g',   0, '(' ) => 'abc'
- * extract( 'abc( def ) g', '(', '(' ) => 'def'
- * extract( 'abc( def ) g', 'd'      ) => 'ef ) g'
- * extract( 'abc( def ) g',   0, 'd' ) => 'abc('
- * extract( ' fn() => 0 ', '(', ')' ) 	=> '' 
- * extract( ' fn(a) => 0 ', '(', ')' ) 	=> 'a'
- * extract( ' fn( a, b, c) => 0 ', '(', ')' ) => 'a, b, c' 
- * extract( ' fn( a, b, c) => 0 ',   0, '(' ) => 'fn'
- * extract( ' fn ( a, b, c) => 0 ',  0, '(' ) => 'fn'
- * extract( ' fn ( a, b, c) => 0 ',  0, '(' ) => 'fn'
- * extract( ' fn( a, b, c) => 0 ',  '=>'    ) => '0'
- * @param {String} source - source string
- * @param {Number|String} start - starting position or marker
- * @param {Number|String} end - ending position or marker
- * @returns {string} returns trimmed string from start..end  
- */
-export function extract(s, min,max){
-	Log.Call('extract,s,min,max', Array.prototype.slice.call(arguments));
-	if (typeof min==='string'){
-	    var p = qindexOf(s, min);
-	    if (p<0) return null;
-	    min = p + min.length;
-	}
-	if (max==undefined)
-	    max = s.length; 
-	else if (typeof max==='string'){
-	    var p = qindexOf(s, max, min);
-	    if (p<0) return null;
-	    max = p;
-	}
-	Log.e("extract: return '%s'[%d..%d] = '%s'", s,min,max, s.substring(min,max));
-	return s.substring(min, max).trim();
-}
-
-/**
- * returns array of 'delim' separated substrings, outside of quoted substrings
- * @param {String} source - source string
- * @param {String} delim - separator
- * @returns {Array} of substrings  
- */
-export function qsplit(s, delim){
-		Log.Call('qsplit,s,delim', Array.prototype.slice.call(arguments));
-		var res = [], strt = 0;
-		var p = qindexOf(s,delim, strt);
-		while (p>=0){
-			res.push( s.substring(strt,p).trim() );
-			Log.d('qsplit: + "%s"', res[res.length-1]);
-			strt = p + delim.length;
-			p = qindexOf(s,delim, strt);
-		}
-		res.push( s.substr(strt));
-		Log.d('qsplit: +."%s"', res[res.length-1]);
-		return res;
-}
-
-/**
- * returns index of specified substring, outside of quoted substrings
- * @param {String} source - source string
- * @param {String} substr - substring to search for
- * @param {number} optional start - index to begin search
- * @returns {Number} returns index of 1st occurrence, or -1 if not found  
- */
-export function qindexOf(s, s2, strt){
-		Log.Call('qindexOf,s,s2,strt', Array.prototype.slice.call(arguments));
-		if (strt==undefined) strt = 0;
-		var instr = false, qchar = '';
-		var sch = s2.charAt(0);
-		for (var i=strt; i<s.length; i++){
-			var ch = s.charAt(i);
-			if (instr){
-				if (ch==qchar) instr = false;
-			} else if (ch=="'" || ch=='"'){
-				instr = true; qchar = ch;
-			} else if (ch==sch){
-				if (s.substr(i,s2.length)==s2)
-					return i;
-			}
-		}
-		Log.d('qindexOf: no "%s" found in "%s":%d', s2,s,strt);
-		return -1;
-}
-
-/** converts quoted strings to strings, unquoted strings to values
- * @param {String}  value definition
- * @returns {string} literal value 
- */
-export function asLiteral( s ){
-		Log.Call('asLiteral,s', Array.prototype.slice.call(arguments));
-    	if (typeof s !== 'string') 
-    	    return s;  // already non-string
-    	s = s.trim();
-    	var fr = s.charAt(0), bk = s.charAt(s.length-1);
-    	if (fr==bk && (fr=='"' || fr=="'")) 
-    	    return s.substr(1,s.length-2).trim();	// unquote, then return string
-    	
-    	if ( s=='true' ) return true;
-    	if ( s=='false' ) return false;
-    	if ( s=='null' ) return null;
-    	if ( s=='' || s=='undefined' ) return undefined;
-    	if ( s=='NaN' ) return 1/0;	// NaN
-
-    	var v = +s;
-    	//console.log('aL: %s:%d', typeof v, v);
-    	if ( !isNaN(v) ) return v;
-    	Log.e('asLiteral: "%s" unrecognized', s);
-    	return 'ERR['+s+']';
-}
-
-///**
-// * verify test expression
-// * e.g.:  " nm(0,'b',3.5,false) => 8 " translates to it(descr, function(){ expect( fn(0, 'b', 3.5, false).toEqual(8); });
-// *    ==> as toBe,
-// *   throws=>  as toThrow()
-// * @param {String} descr - test description as in examples
-// * @param {Function} fn - javascript function to call
-// */
-//export function verify(vstr, actualfn){
-//		Log.Call('verify,vstr,fn', Array.prototype.slice.call(arguments));
-//    	var fname = extract(vstr, 0,'(' );
-//    	var argstr = extract(vstr, '(', ')' );
-//    	if (argstr==null) { Log.e('verify: no () found in "%s"',vstr); return; }
-//    	var args = argstr==null? [] : qsplit(argstr, ',');
-//    	for(var i=0; i<args.length; i++){
-//    	    args[i] = asLiteral(args[i]);
-//    	    Log.d('verify: arg[%d]=%s', i,args[i]);
-//    	}
-//    	
-//    	var result = asLiteral( extract(vstr, '=>' ) );	
-//    	Log.d('verify: got %s', actualfn.apply(this, args));
-//    	var op = qindexOf(vstr,'==>')>0? '==>' : qindexOf(vstr,'throws=>')>0? 'throws=>' : '=>';
-//    	switch (op){ 
-//		case "=>":
-//			it(vstr, function(){ expect( actualfn.apply( this, args )).toEqual( result ) });
-//			break;
-//		case "==>":
-//			it(vstr, function(){ expect( actualfn.apply( this, args )).toBe( result ) });
-//			break;
-//		case "throws=>":
-//			it(vstr, function(){ expect( actualfn.apply( this, args )).toThrow( result ) });
-//			break;
-//    	}
-//}
 
 
 // still used?

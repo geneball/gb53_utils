@@ -2,11 +2,16 @@
   "name": "gb53_utils",
   "version": "0.5.1",
   "description": "gb53.net utilities",
-  "main": "index.html",
+  "main": "../index.html?utils",
   "scripts": {
-    "jsdoc": "jsdoc utils.js -d ../jsdocs",
-    "test": "qunit -c utils.js -t tests.js"
+    "docs": "jsdoc -d ../jsdocs"
   },
+  "repository": {
+	    "type": "git",
+	    "url": "http://bitbucket.org/geneball/gb53_utils"
+	  },
+  "author": "Gene Ball",
+  "license": "MIT",
   "jspm": {
     "dependencies": {
       "expect": "npm:expect@^1.14.0",
@@ -21,24 +26,5 @@
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
     }
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://bitbucket.org/geneball/gb53_utils"
-  },
-  "require": [
-    "gb53_log",
-    "jquery-browserify",
-    "moment",
-    "sprintf",
-    "expect"
-  ],
-  "require-dev": [
-    "qunit-bdd"
-  ],
-  "author": {
-    "name": "Gene Ball",
-    "email": "geneball@gmail.com"
-  },
-  "license": "MIT"
+  }
 }
