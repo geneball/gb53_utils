@@ -5,9 +5,10 @@
 'use strict';
 import $ from 'jquery';
 import sprintf from 'sprintf';
-import * as Log from '../log/gb53_log';
+import * as Log from 'gb53_log';
 	
-var sVersion = 'gb53_utils.js 11-Feb-16';
+var sVersion = 'gb53_utils.js 16-Apr-16';
+//18-Mar add Ut.sprintfo to format from fields of an object
 
 /** get Version string
  * @returns {string} version as 'filename.js date'
@@ -47,14 +48,14 @@ export function DEG(x){ return	(x? x:1)*Math.PI/180.0 };
  * @returns {Number}
  */
 export function asNum(val, def_value, min, max, asInt){
-    	Log.Call('asNum,val,def_value,min,max,asInt', Array.prototype.slice.call(arguments));
-    	if(def_value==undefined) def_value = 0;
+    Log.Call('asNum,val,def_value,min,max,asInt', Array.prototype.slice.call(arguments));
+    if(def_value==undefined) def_value = 0;
 	if(min==undefined)  min = -Number.MAX_VALUE; 
     	if(max==undefined)  max = Number.MAX_VALUE; 
 	if(asInt==undefined) asInt = false;
 		
-	if (val=='') 
-	    val = def_value;
+	if (typeof val==='string')
+		val = val==''? def_value : parseFloat(val);
 	val = +val;
 	if (isNaN(val)) 
 	    val = def_value;
@@ -155,8 +156,9 @@ export function selBool(sel){
  */
 export function angleWrap(deg){ 
 		Log.Call('angleWrap,deg', Array.prototype.slice.call(arguments));
-		while (deg<0) deg += 360;
-		while (deg>=360) deg -= 360;
+		if (typeof deg === 'string') deg = parseFloat(deg);
+		deg = deg % 360;
+		if (deg<0) deg += 360;
 		return deg;
 }
 
@@ -191,6 +193,39 @@ export function pctClamp(pct, min,max){
 }
 
 /**
+ * format string from object fields
+ * @param {string} sprintf-like format string with object references in %()
+ * @param {Object} object that supplies values 
+ * @returns {string} sprintf formatted values
+ *   e.g.  sprintfo(" o.str= %(str)s  o.v1= %(v1)d  o.a.foo= %(a.foo)4.2f ", { str: 'test', v1: 7, a:{ foo:3.14159, baz:73.123 }})
+ *    returns: " o.str= test  o.v1= 7  o.a.foo= 3.14 "
+ */
+export function sprintfo(fmt, obj){ 
+	var args = [ '' ];
+	var iPrv = 0;
+	while (true){
+		var iNxt = fmt.indexOf('%(', iPrv );
+		var iEnd = fmt.indexOf( ')', iNxt+1 );  // ok if iNxt==-1
+		if (iNxt < 0){
+			args[0] += fmt.substring(iPrv);
+			break;
+		} 
+		args[0] += fmt.substring(iPrv,iNxt+1);
+		args.push(objRef(obj, fmt.substring(iNxt+2,iEnd)));
+		iPrv = iEnd+1;
+	}
+    return sprintf.apply(null, args ); 
+}
+function objRef(obj, ref){
+	var parts = ref.split('.');
+	var res = obj;
+	for (var i=0; i<parts.length; i++)
+		if (typeof obj==='object')
+			res = res[parts[i]];
+	return res;
+}
+
+/**
  * display string for Babylon camera
  * @param {Object} Babylon camera
  * @returns {string} shows camera position & target
@@ -202,7 +237,6 @@ export function showCam(cam){
     		cam.position.x, cam.position.y, cam.position.z, 
     		cam.target.x, cam.target.y, cam.target.z); 
 }
-
 
 // still used?
 function asVec(labels, args) { // call as ('xyz', [ args of length: 2[s, {x:,y:,z:}] 4[s, x,y,z] 3[x,y,z] or 1[{x:,y:,z:}] )
