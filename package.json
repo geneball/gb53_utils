@@ -9,14 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://bitbucket.org/geneball/gb53_utils"
+    "url": "https://github.com/geneball/gb53_utils"
   },
   "author": "Gene Ball",
   "license": "MIT",
   "jspm": {
     "dependencies": {
       "expect": "npm:expect@^1.14.0",
-      "gb53_utils": "local:gb53_utils@0.5.1",
+      "gb53_log": "github:geneball/gb53_log@master",
+      "gb53_utils": "github:geneball/gb53_utils@master",
       "jquery": "npm:jquery@^2.2.0",
       "moment": "npm:moment@^2.11.2",
       "qunit": "github:jquery/qunit@^1.21.0",
