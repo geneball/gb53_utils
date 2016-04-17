@@ -8,7 +8,7 @@ import * as Log from 'gb53_log';
 //import * as MD from '../MODULE/gb53_MODULE';
 //import * as TUt from '../testutils/gb53_testutils';
 import * as Ut from 'gb53_utils';
-import * as Ux from 'gb53_ux';
+//import * as Ux from 'gb53_ux';
 //import * as Ixi from '../ixi/gb53_ixi';
 //import * as Ds from '../dstore/gb53_dstore';
 //import * as Ev from '../engval/gb53_engval';
@@ -32,7 +32,7 @@ Log.i('jspm: %s',  Ux.Version() );
 //Log.i('jspm: %s',  Scr.Version() );
 //Log.i('jspm: %s',  scrPFR.Version() );
 
-Ux.msg( 'gb53_utils loaded successfully.' );
-
+//Ux.msg( 'gb53_utils loaded successfully.' );
+console.log('gb53_utils loaded successfully.');
 // module specific code can go here
 
